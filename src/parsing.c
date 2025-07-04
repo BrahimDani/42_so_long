@@ -82,7 +82,38 @@ static void	test_block(char **map, int size)
 				ft_error("wrong map given\n", 1, map);
 			if ((j == 0 || j == x - 1) && map[i][j] != '1')
 				ft_error("wrong map given\n", 1, map);
+			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != 'C'
+				&& map[i][j] != 'E' && map[i][j] != 'P');
+				ft_error("wrong map given\n", 1, map);
+			j++;
 		}
+		i++;
+	}
+}
+
+void	check_dupplicate(char **map)
+{
+	int	i;
+	int	j;
+	int pt_p;
+	int	pt_e;
+
+
+	i = 0;
+	pt_p = 0;
+	pt_e = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'E')
+				pt_e++;
+			else if (map[i][j] == 'P')
+				pt_p++;
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -98,12 +129,12 @@ char	**creat_map(char **argv, size_t *size)
 		ft_error("error malloc\n", 0, 0);
 	map[*size] = NULL;
 	put_map(argv, map, *size);
-	// tester tout le block (si les caractere sont ok (0 / 1 / C / P / E))
 	test_block(map, *size);
-	// check dupplicate (verif si y'a plusieur P ou E)
-	// int item (si y'a pas C ou de P) boucle (find_point(map, 'P' point))
-	//if item == 0 
-	//if player == 0
-	// flood_fill
-	// return (map);
+	check_dupplicate(map);
+	item = (find_point(map, "C", point));
+	if (item == 0 || find_point(map, "P", point) == 0)
+		ft_error("this isn't a possible map\n", 1, map);
+	//if ()
+	// flood_fill "flood_fill(map, point[0], point[1], &item)"
+	return (map);
 }

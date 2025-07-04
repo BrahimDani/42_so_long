@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "so_long.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -18,7 +18,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	new = malloc(sizeof(char) * (ft_conststrlen(s1) + ft_conststrlen(s2) + 1));
 	if (!new)
 		return (NULL);
 	i = 0;
@@ -48,7 +48,7 @@ void	*ft_calloc(size_t num, size_t size)
 	return (ptr);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_conststrlen(const char *str)
 {
 	int	i;
 

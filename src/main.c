@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:56:06 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/04 16:51:42 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/05 18:24:56 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ int	main(int argc, char **argv)
 		ft_error("wrong input\n", 0, 0);
 	ptr.map = creat_map(argv, &ptr.size_map);
 	ptr.index = 0;
-	// find idem point (fonction find_point(ptr, map, 'c', ptr.exit)
-	// find exit point
-	// find player point
-	// lunch mlx (mlx_new_window)
-		
+	ptr.item = find_point(ptr.map, 'c', ptr.exit);
+	find_point(ptr.map, 'e', ptr.player);
+	find_point(ptr.map, 'P', ptr.player);
+	ptr.mlx = mlx_init();
+	if (!ptr.mlx)
+		ft_error("mlx launch probleme\n", 1, ptr.map);
+	ptr.mlx_win = mlx_new_window(ptr.mlx, (ft_strlen(ptr.map[0])) * 32,
+			ptr.size_map * 32, "so_long:D");
+	insert_map(&ptr);		
 }

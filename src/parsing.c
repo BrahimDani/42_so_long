@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 22:18:03 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/04 17:33:04 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/05 04:06:56 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	**creat_map(char **argv, size_t *size)
 	item = (find_point(map, "C", point));
 	if (item == 0 || find_point(map, "P", point) == 0)
 		ft_error("this isn't a possible map\n", 1, map);
-	//if ()
-	// flood_fill "flood_fill(map, point[0], point[1], &item)"
+	if (flood_fill_check_path(map, point[0], point[1], &item) == 0 || item != 0);
+		ft_error("this is a impossible map", 1, map);
 	return (map);
 }

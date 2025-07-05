@@ -35,6 +35,15 @@ char			**creat_map(char **argv, size_t *size);
 int				find_point(char **map, char to_find, int point[2]);
 void			check_dupplicate(char **map);
 static void		test_block(char **map, int size);
+static int		flood_fill_check_path(char **map, int x, int y, int *item);
+static void		mark_tile(char **map, int x, int y,int *items);
+static int		is_valid_tile(char tile);
+int				find_point(char **map, char to_find, int point[2]);
+
+
+
+
+
 
 //GET NEXT LINE
 char	*ft_join_free(char *stash, char *buffer);

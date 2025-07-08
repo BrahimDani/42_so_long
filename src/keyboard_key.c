@@ -78,6 +78,16 @@ static void	move_right(t_ptr *ptr)
 
 int ft_event(int keycode, t_ptr *ptr)
 {
+	choice_key(keycode, ptr);
+	if (ptr->map[ptr->player[1]][ptr->player[0]] == 'c')
+		ptr->map[ptr->player[1]][ptr->player[0]] = 'o';
+	else if (ptr->item == 0)
+		mlx_put_image_to_window(ptr->mlx, ptr->mlx_win, ptr->img[5], ptr->exit[0] * 32, ptr->exit[1] * 32);
+	return (0);	
+}
+
+void	choice_key(int keycode, t_ptr *ptr)
+{
 	if (keycode == ESCAPE)
 		exit_mlx(ptr);
 	else if (keycode == KEY_W || keycode == ARROW_UP)
@@ -88,9 +98,4 @@ int ft_event(int keycode, t_ptr *ptr)
 		move_down(ptr);
 	else if (keycode == KEY_D || keycode == ARROW_RIGHT)
 		move_right(ptr);
-	else if (ptr->map[ptr->player[1]][ptr->player[0]] == 'c')
-		ptr->map[ptr->player[1]][ptr->player[0]] = 'o';
-	else if (ptr->item == 0)
-		mlx_put_image_to_window(ptr->mlx, ptr->mlx_win, ptr->img[5], ptr->exit[0] * 32, ptr->exit[1] * 32);
-	return (0);	
 }

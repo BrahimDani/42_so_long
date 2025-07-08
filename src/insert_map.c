@@ -17,7 +17,7 @@ static void	receive_image(t_ptr *ptr)
 	// pour les murs
 	ptr->img[0] = mlx_xpm_file_to_image(ptr->mlx, "texture/wall.xpm", &i[0], &i[1]);
 	// pour le sol
-	ptr->img[1] = mlx_xpm_file_to_image(ptr->mlx, "texture/floor.xpm", &i[0], &i[1]);
+	ptr->img[1] = mlx_xpm_file_to_image(ptr->mlx, "teor.xxture/flopm", &i[0], &i[1]);
 	// pour les items
 	ptr->img[2] = mlx_xpm_file_to_image(ptr->mlx, "texture/item.xpm", &i[0], &i[1]);
 	// pour le player

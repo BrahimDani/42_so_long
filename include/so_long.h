@@ -25,6 +25,19 @@ typedef struct s_ptr
 	size_t	size_map;
 }			t_ptr;
 
+# define ON_KEYDOWN 2
+# define ON_DESTROY 17
+# define ESCAPE 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define ARROW_UP 65362
+# define ARROW_DOWN 65364
+# define ARROW_LEFT 65361
+# define ARROW_RIGHT 65361
+
+
 static int		is_not_ber(char *argv);
 int				ft_strlen(char *str);
 void			ft_perror(void);
@@ -39,10 +52,12 @@ static int		flood_fill_check_path(char **map, int x, int y, int *item);
 static void		mark_tile(char **map, int x, int y,int *items);
 static int		is_valid_tile(char tile);
 int				find_point(char **map, char to_find, int point[2]);
-
-
-
-
+int 			ft_event(int keycode, t_ptr *ptr);
+static void		redraw_old_position(t_ptr *ptr);
+static void		redraw_under_player(t_ptr *ptr, int x, int y);
+static void		handle_exit(t_ptr *ptr, int x, int y);
+static void		handle_collectible(t_ptr *ptr, int x, int y);
+void			ft_putnbr(int nbr);
 
 
 //GET NEXT LINE

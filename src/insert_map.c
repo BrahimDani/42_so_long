@@ -28,8 +28,8 @@ static void	receive_image(t_ptr *ptr)
 	ptr->img[5] = mlx_xpm_file_to_image(ptr->mlx, "texture/open_door.xpm", i[0], &i[1]);
 	// pour le player sur la porte qui est fermer 
 	ptr->img[6] = mlx_xpm_file_to_image(ptr->mlx, "texture/player_on_door.xpm", i[0], &i[1]);
-	// pour le sol en dessous du player 
-	ptr->img[7] = mlx_xpm_file_to_image(ptr->mlx, "texture/player_on_floor.xpm", i[0], &i[1]);
+	// pour le sol apres le passage du player
+	ptr->img[7] = mlx_xpm_file_to_image(ptr->mlx, "texture/floor_after_player.xpm", i[0], &i[1]);
 
 	j = 0;
 	while (j < 8 && ptr->img[j])

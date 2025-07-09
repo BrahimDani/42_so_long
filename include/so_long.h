@@ -38,26 +38,19 @@ typedef struct s_ptr
 # define ARROW_RIGHT 65361
 
 
-static int		is_not_ber(char *argv);
 int				ft_strlen(char *str);
 void			ft_perror(void);
 void			ft_error(char *message, int choice, char **map);
-static size_t	size_maps(char **argv);
-static void		put_map(char **argv, char **map, int size);
 char			**creat_map(char **argv, size_t *size);
 int				find_point(char **map, char to_find, int point[2]);
 void			check_dupplicate(char **map);
-static void		test_block(char **map, int size);
-static int		flood_fill_check_path(char **map, int x, int y, int *item);
-static void		mark_tile(char **map, int x, int y,int *items);
-static int		is_valid_tile(char tile);
 int				find_point(char **map, char to_find, int point[2]);
 int 			ft_event(int keycode, t_ptr *ptr);
-static void		redraw_old_position(t_ptr *ptr);
-static void		redraw_under_player(t_ptr *ptr, int x, int y);
-static void		handle_exit(t_ptr *ptr, int x, int y);
-static void		handle_collectible(t_ptr *ptr, int x, int y);
 void			ft_putnbr(int nbr);
+void			insert_map(t_ptr *ptr);
+int				exit_mlx(t_ptr *ptr, int choice);
+void			free_map(char **map);
+void			choice_key(int keycode, t_ptr *ptr);
 
 
 //GET NEXT LINE

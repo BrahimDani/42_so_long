@@ -6,11 +6,50 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 22:18:03 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/05 04:06:56 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/09 04:54:49 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static int	is_valid_tile(char tile)
+{
+	return (tile != '1' && tile != 'o' && tile != 'c' && tile != 'e');
+}
+
+static void	mark_tile(char **map, int x, int y,int *items)
+{
+	if (map[y][x] == '0')
+		map[y][x] = 'o';
+	else if (map[y][x] == 'C')
+	{
+		map[y][x] = 'c';
+		(*items)--;
+	}
+	else if (map[y][x] == 'E')
+		map[y][x] = 'e';
+}
+
+static int	flood_fill_check_path(char **map, int x, int y, int *item)
+{
+	if (!is_valid_tile(map[y][x]))
+		return (0);
+	mark_tile(map, x, y, item);
+	
+	if (map[y][x] == 'e')
+		return (
+			flood_fill_check_path(map, x - 1, y, item) +
+			flood_fill_check_path(map, x + 1, y, item) +
+			flood_fill_check_path(map, x, y - 1, item) +
+			flood_fill_check_path(map, x, y + 1, item) + 1
+		);
+	return (
+		flood_fill_check_path(map, x - 1, y, item) +
+		flood_fill_check_path(map, x + 1, y, item) +
+		flood_fill_check_path(map, x, y - 1, item) +
+		flood_fill_check_path(map, x, y + 1, item)
+	);
+}
 
 static size_t  size_maps(char **argv)
 {
@@ -33,15 +72,15 @@ static size_t  size_maps(char **argv)
 	close(fd);
 	if (size >= 3)
 		return (size);
-	ft_error("the map is empty", 0, 0);
+	ft_error("the map is empty\n", 0, 0);
 	return (0);
 }
 
 static void	put_map(char **argv, char **map, int size)
 {
-	int	fd;
-	int	i;
-	int	*tmp;
+	int		fd;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	fd = open(argv[1], O_RDONLY);
@@ -55,7 +94,7 @@ static void	put_map(char **argv, char **map, int size)
 		tmp = get_next_line(fd);
 		if (!tmp)
 			break;
-		if (tmp[ft_strlen(tmp) - 1] == '\n');
+		if (tmp[ft_strlen(tmp) - 1] == '\n')
 			tmp[ft_strlen(tmp) - 1] = '\0';
 		map[i] = tmp;
 		i++;
@@ -82,8 +121,7 @@ static void	test_block(char **map, int size)
 				ft_error("wrong map given\n", 1, map);
 			if ((j == 0 || j == x - 1) && map[i][j] != '1')
 				ft_error("wrong map given\n", 1, map);
-			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != 'C'
-				&& map[i][j] != 'E' && map[i][j] != 'P');
+			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != 'C' && map[i][j] != 'E' && map[i][j] != 'P')
 				ft_error("wrong map given\n", 1, map);
 			j++;
 		}
@@ -115,6 +153,8 @@ void	check_dupplicate(char **map)
 		}
 		i++;
 	}
+	if (pt_e != 1 || pt_p != 1)
+		ft_error("wrong map given\n", 1, map);
 }
 
 char	**creat_map(char **argv, size_t *size)
@@ -131,10 +171,10 @@ char	**creat_map(char **argv, size_t *size)
 	put_map(argv, map, *size);
 	test_block(map, *size);
 	check_dupplicate(map);
-	item = (find_point(map, "C", point));
-	if (item == 0 || find_point(map, "P", point) == 0)
+	item = (find_point(map, 'C', point));
+	if (item == 0 || find_point(map, 'P', point) == 0)
 		ft_error("this isn't a possible map\n", 1, map);
-	if (flood_fill_check_path(map, point[0], point[1], &item) == 0 || item != 0);
+	if (flood_fill_check_path(map, point[0], point[1], &item) == 0 || item != 0)
 		ft_error("this is a impossible map", 1, map);
 	return (map);
 }

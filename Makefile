@@ -1,52 +1,58 @@
-NAME		=	so_long
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: brdany <brdany@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/10/31 18:10:28 by tbraud            #+#    #+#              #
+#    Updated: 2025/07/09 05:02:34 by brdany           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CC			=	clang
+NAME	:= so_long
 
-FLAG		=	-Wall -Wextra -Werror -g
+SRC_DIR	:= src
+OBJ_DIR	:= obj
 
-MLX_FILE	=	libmlx.a
+CC		:= clang
+CFLAGS	:= -Wextra -Wall -Werror
 
-MLX_FLAG	=	-lX11 -lXext
+INCLUDE	:= -I ./include
 
-MLX_PATH	=	./mlx/
+SRC		:= main.c \
+			get_next_line_utils.c \
+			get_next_line.c \
+			insert_map.c \
+			keyboard_key.c \
+			keyboard_key_utils.c \
+			parsing.c \
+			parsing_two.c \
+			error.c
+OBJ		:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-MLX_LIB		=	$(addprefix $(MLX_PATH), $(MLX_FILE))
+GREEN	:= \033[1;32m
+NC		:= \033[0m
 
-MLX_EX		=	$(MLX_LIB) $(MLX_FLAG)
+LIB 	:= make -sC mlx
+LIB.A	:= mlx/libmlx_Linux.a
 
-C_FILE		=	main.c				\
-				
-
-SRC_DIR		=	./
-
-INC_DIR		=	./includes/
-
-SRC			=	$(addprefix $(SRC_DIR),$(C_FILE))
-
-OBJ			=	$(SRC:.c=.o)
-
-.c.o:
-	$(CC) $(FLAG) -c $< -o $@
+ifdef DEBUG
+CFLAGS += -g
+endif
 
 all: $(NAME)
 
-./mlx/libmlx.a:
-	@echo "\033[0;33m\nCOMPILING $(MLX_PATH)...\n"
-	@make -sC $(MLX_PATH)
-	@echo "\033[1;32mMLX_lib created\n"
+$(NAME): $(OBJ)
+	@$(LIB)
+	@$(CC) $(OBJ) $(LIB.A) -lXext -lX11 -lm -lz -o $(NAME) && printf "$(GREEN)✔️ $(NAME)$(NC) compiled\n"
 
-$(NAME): ./mlx/libmlx.a $(OBJ)
-	@echo "\033[0;33m\nCOMPILING SO_LONG...\n"
-	$(CC) $(OBJ) $(MLX_EX) -o $(NAME)
-	@echo "\033[1;32m./so_long created\n"
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDE) && printf "$(GREEN)✔️ $(notdir $<)$(NC) compiled\n"
 
 clean:
-	@echo "\033[0;31mDeleting Obj file in $(MLX_PATH)...\n"
-	@make clean -sC $(MLX_PATH)
-	@echo "\033[1;32mDone\n"
-	@echo "\033[0;31mDeleting So_long object...\n"
-	@rm -f $(OBJ) $(NAME)
-	@echo "\033[1;32mDone\n"
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@echo "\033[0;31mDeleting so_long executable..."
@@ -54,6 +60,6 @@ fclean: clean
 	@make clean -sC $(MLX_PATH)
 	@echo "\033[1;32mDone\n"
 
-re: fclean all
+re: clean all
 
 .PHONY: all clean fclean re

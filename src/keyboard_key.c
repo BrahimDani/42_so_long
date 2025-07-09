@@ -6,17 +6,63 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 18:50:31 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/08 22:25:06 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/09 00:00:16 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+
+static void	handle_collectible(t_ptr *ptr, int x, int y)
+{
+	if (ptr->map[y][x] == 'c')
+	{
+		ptr->item--;
+		ptr->map[y][x] = 'o';
+	}
+}
+
+static void	handle_exit(t_ptr *ptr, int x, int y)
+{
+	if (ptr->map[y][x] == 'e' && ptr->item == 0)
+		exit_mlx(ptr, 0);
+}
+
+static void	redraw_under_player(t_ptr *ptr, int x, int y)
+{
+	void	*img;
+
+	if (ptr->map[y][x] == 'c' || ptr->map[y][x] == 'o')
+		img = ptr->img[3];
+	else if (ptr->map[y][x] == 'e')
+		img = ptr->img[6];
+	else
+		img = ptr->img[1];
+
+	mlx_put_image_to_window(ptr->mlx, ptr->mlx_win, img, x * 32, y * 32);
+}
+
+static void	redraw_old_position(t_ptr *ptr)
+{
+	int x;
+	int y;
+
+	x = ptr->player[0];
+	y = ptr->player[1];
+
+	if (x == ptr->exit[0] && y == ptr->exit[1])
+		mlx_put_image_to_window(ptr->mlx, ptr->mlx_win, ptr->img[4], x * 32, y * 32);
+	else
+		mlx_put_image_to_window(ptr->mlx, ptr->mlx_win, ptr->img[7], x * 32, y * 32);
+}
+
+
+// TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 static void	move_up(t_ptr *ptr)
 {
 	if (ptr->map[ptr->player[0] - 1][ptr->player[1]] == '1')
 		return ;
-		ptr->index++;
+	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
 	
@@ -62,7 +108,7 @@ static void	move_left(t_ptr *ptr)
 
 static void	move_right(t_ptr *ptr)
 {
-	if (ptr->map[ptr->player[0] + 1][ptr->player[1]]);
+	if (ptr->map[ptr->player[0] + 1][ptr->player[1]])
 		return ;
 	ptr->index++;
 	ft_putnbr(ptr->index);
@@ -89,7 +135,7 @@ int ft_event(int keycode, t_ptr *ptr)
 void	choice_key(int keycode, t_ptr *ptr)
 {
 	if (keycode == ESCAPE)
-		exit_mlx(ptr);
+		exit_mlx(ptr, 0);
 	else if (keycode == KEY_W || keycode == ARROW_UP)
 		move_up(ptr);
 	else if (keycode == KEY_A || keycode == ARROW_LEFT)

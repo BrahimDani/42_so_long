@@ -6,7 +6,7 @@
 #    By: brdany <brdany@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/31 18:10:28 by tbraud            #+#    #+#              #
-#    Updated: 2025/07/09 05:02:34 by brdany           ###   ########.fr        #
+#    Updated: 2025/07/11 20:59:25 by brdany           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_DIR	:= src
 OBJ_DIR	:= obj
 
 CC		:= clang
-CFLAGS	:= -Wextra -Wall -Werror
+CFLAGS	:= -g -Wextra -Wall -Werror
 
 INCLUDE	:= -I ./include
 

@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 18:50:31 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/09 00:00:16 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/11 21:56:16 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ static void	move_right(t_ptr *ptr)
 }
 
 int ft_event(int keycode, t_ptr *ptr)
-{
+{	if (keycode == ESCAPE)
+		exit_mlx(ptr, 0);
 	choice_key(keycode, ptr);
 	if (ptr->map[ptr->player[1]][ptr->player[0]] == 'c')
 		ptr->map[ptr->player[1]][ptr->player[0]] = 'o';
@@ -134,9 +135,7 @@ int ft_event(int keycode, t_ptr *ptr)
 
 void	choice_key(int keycode, t_ptr *ptr)
 {
-	if (keycode == ESCAPE)
-		exit_mlx(ptr, 0);
-	else if (keycode == KEY_W || keycode == ARROW_UP)
+	if (keycode == KEY_W || keycode == ARROW_UP)
 		move_up(ptr);
 	else if (keycode == KEY_A || keycode == ARROW_LEFT)
 		move_left(ptr);

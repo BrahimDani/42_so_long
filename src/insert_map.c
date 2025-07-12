@@ -1,5 +1,16 @@
-#include "so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   insert_map.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/11 21:08:04 by brdany            #+#    #+#             */
+/*   Updated: 2025/07/12 15:29:47 by brdany           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "so_long.h"
 
 static void *choose_img(char block, t_ptr *ptr)
 {
@@ -21,21 +32,13 @@ static void	receive_image(t_ptr *ptr)
 	int	i[2];
 	int	j;
 
-	// pour les murs
 	ptr->img[0] = mlx_xpm_file_to_image(ptr->mlx, "texture/wall.xpm", &i[0], &i[1]);
-	// pour le sol
 	ptr->img[1] = mlx_xpm_file_to_image(ptr->mlx, "texture/floor.xmp", &i[0], &i[1]);
-	// pour les items
 	ptr->img[2] = mlx_xpm_file_to_image(ptr->mlx, "texture/item.xpm", &i[0], &i[1]);
-	// pour le player
 	ptr->img[3] = mlx_xpm_file_to_image(ptr->mlx, "texture/player.xpm", &i[0], &i[1]);
-	// pour les portes fermer
 	ptr->img[4] = mlx_xpm_file_to_image(ptr->mlx, "texture/c_door.xpm", &i[0], &i[1]);
-	// porte ouverte 
-	ptr->img[5] = mlx_xpm_file_to_image(ptr->mlx, "texture/o_door.xpm", &i[0], &i[1]);
-	// pour le player sur la porte qui est fermer 
+	ptr->img[5] = mlx_xpm_file_to_image(ptr->mlx, "texture/o_door.xpm", &i[0], &i[1]); 
 	ptr->img[6] = mlx_xpm_file_to_image(ptr->mlx, "texture/player_door.xpm", &i[0], &i[1]);
-	// pour le sol apres le passage du player
 	ptr->img[7] = mlx_xpm_file_to_image(ptr->mlx, "texture/player_floor.xpm", &i[0], &i[1]);
 
 	j = 0;

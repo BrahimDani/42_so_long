@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:56:06 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/12 15:22:52 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/12 17:12:27 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	main(int argc, char **argv)
 	ptr.mlx_win = mlx_new_window(ptr.mlx, (ft_strlen(ptr.map[0])) * 32,
  			ptr.size_map * 32, "so_long");
 	insert_map(&ptr);
-	// ptr.map[ptr.player[1]][ptr.player[0]] = 'o';
-	// mlx_hook(ptr.mlx_win, ON_KEYDOWN, (1L << 0), ft_event, &ptr);
-	// mlx_hook(ptr.mlx_win, ON_DESTROY, (1L << 0), exit_mlx, &ptr);
-	// mlx_loop(ptr.mlx);
+	ptr.map[ptr.player[1]][ptr.player[0]] = 'o';
+	mlx_hook(ptr.mlx_win, ON_KEYDOWN, (1L << 0), ft_event, &ptr);
+	mlx_hook(ptr.mlx_win, ON_DESTROY, (1L << 0), exit_mlx, &ptr);
+	mlx_loop(ptr.mlx);
 }

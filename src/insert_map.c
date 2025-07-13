@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 21:08:04 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/12 15:29:47 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/12 17:18:14 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	receive_image(t_ptr *ptr)
 	int	j;
 
 	ptr->img[0] = mlx_xpm_file_to_image(ptr->mlx, "texture/wall.xpm", &i[0], &i[1]);
-	ptr->img[1] = mlx_xpm_file_to_image(ptr->mlx, "texture/floor.xmp", &i[0], &i[1]);
+	ptr->img[1] = mlx_xpm_file_to_image(ptr->mlx, "texture/floor.xpm", &i[0], &i[1]);
 	ptr->img[2] = mlx_xpm_file_to_image(ptr->mlx, "texture/item.xpm", &i[0], &i[1]);
 	ptr->img[3] = mlx_xpm_file_to_image(ptr->mlx, "texture/player.xpm", &i[0], &i[1]);
 	ptr->img[4] = mlx_xpm_file_to_image(ptr->mlx, "texture/c_door.xpm", &i[0], &i[1]);

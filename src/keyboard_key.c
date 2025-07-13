@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 18:50:31 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/11 21:56:16 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/13 19:46:08 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,30 @@ static void	redraw_old_position(t_ptr *ptr)
 
 
 // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-static void	move_up(t_ptr *ptr)
+static void	print_map(t_ptr *ptr)
 {
-	if (ptr->map[ptr->player[0] - 1][ptr->player[1]] == '1')
+	int x,y;
+
+	y = 0;
+	while (ptr->map[y]) {
+		x=0;
+		while (ptr->map[y][x]) {
+			write(1, &ptr->map[y][x], 1);
+			
+			x++;
+		}
+		write(1, "\n", 1);
+		y++;
+	}
+}
+
+static void	move_down(t_ptr *ptr)
+{
+	printf("move down\n");
+	if (ptr->map[ptr->player[0] - 1][ptr->player[1]] == '1')  {
+		print_map(ptr);
 		return ;
+	}
 	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
@@ -74,10 +94,14 @@ static void	move_up(t_ptr *ptr)
 	ptr->player[1]--;
 }
 
-static void	move_down(t_ptr *ptr)
+static void	move_up(t_ptr *ptr)
 {
-	if (ptr->map[ptr->player[0] + 1][ptr->player[1]] == '1')
+	printf("move up\n");
+	if (ptr->map[ptr->player[0] + 1][ptr->player[1]] == '1')  {
+		printf("move up exit\n");
+		print_map(ptr);
 		return ;
+	}
 	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
@@ -92,8 +116,12 @@ static void	move_down(t_ptr *ptr)
 
 static void	move_left(t_ptr *ptr)
 {
-	if (ptr->map[ptr->player[0] - 1][ptr->player[1]] == '1')
+	printf("movr left\n");
+	if (ptr->map[ptr->player[0] - 1][ptr->player[1]] == '1')  {
+		print_map(ptr);
+		printf("movr left exit\n");
 		return ;
+	}
 	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
@@ -108,8 +136,11 @@ static void	move_left(t_ptr *ptr)
 
 static void	move_right(t_ptr *ptr)
 {
-	if (ptr->map[ptr->player[0] + 1][ptr->player[1]])
+	printf("move right\n");
+	if (ptr->map[ptr->player[0] + 1][ptr->player[1]])  {
+		print_map(ptr);
 		return ;
+	}
 	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
@@ -121,6 +152,7 @@ static void	move_right(t_ptr *ptr)
 
 	ptr->player[0]++;
 }
+
 
 int ft_event(int keycode, t_ptr *ptr)
 {	if (keycode == ESCAPE)
@@ -143,4 +175,5 @@ void	choice_key(int keycode, t_ptr *ptr)
 		move_down(ptr);
 	else if (keycode == KEY_D || keycode == ARROW_RIGHT)
 		move_right(ptr);
+	printf("debug keycode %d\n", keycode);
 }

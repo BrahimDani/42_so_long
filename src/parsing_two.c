@@ -7,7 +7,6 @@ int	find_point(char **map, char to_find, int point[2])
 	int	y;
 	int count;
 
-	x = 0;
 	y = 0;
 	count = 0;
 	while (map[y])

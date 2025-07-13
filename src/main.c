@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:56:06 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/12 17:12:27 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/14 01:41:32 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	ptr.map = creat_map(argv, &ptr.size_map);
 	ptr.index = 0;
 	ptr.item = find_point(ptr.map, 'c', ptr.exit);
-	find_point(ptr.map, 'e', ptr.player);
+	find_point(ptr.map, 'e', ptr.exit);
 	find_point(ptr.map, 'P', ptr.player);
 	ptr.mlx = mlx_init();
 	if (!ptr.mlx)

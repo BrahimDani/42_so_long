@@ -6,11 +6,42 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 18:50:31 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/13 19:46:08 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/14 01:47:20 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	get_map_height(char **map)
+{
+	int i = 0;
+	while (map[i])
+		i++;
+	return i;
+}
+
+int	get_map_width(char **map, int y)
+{
+	int i = 0;
+	while (map[y][i])
+		i++;
+	return i;
+}
+
+int	is_inside_map(char **map, int x, int y)
+{
+	int height = get_map_height(map);
+
+	if (y < 0 || y == height)
+		return 0;
+
+	int width = get_map_width(map, y);
+	if (x < 0 || x >= width)
+		return 0;
+
+	return 1;
+}
+
 
 
 static void	handle_collectible(t_ptr *ptr, int x, int y)
@@ -58,99 +89,145 @@ static void	redraw_old_position(t_ptr *ptr)
 
 
 // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-static void	print_map(t_ptr *ptr)
-{
-	int x,y;
+// static void	print_map(t_ptr *ptr)
+// {
+// 	int x,y;
 
-	y = 0;
-	while (ptr->map[y]) {
-		x=0;
-		while (ptr->map[y][x]) {
-			write(1, &ptr->map[y][x], 1);
-			
-			x++;
-		}
-		write(1, "\n", 1);
-		y++;
+// 	y = 0;
+// 	while (ptr->map[y]) {
+// 		x=0;
+// 		while (ptr->map[y][x]) {
+// 			write(1, &ptr->map[y][x], 1);	
+// 			x++;
+// 		}
+// 		write(1, "\n", 1);
+// 		y++;
+// 	}
+// }
+
+static void	move_up(t_ptr *ptr)
+{
+	int	new_x;
+	int new_y;
+
+	new_x = ptr->player[0];
+	new_y = ptr->player[1] - 1;
+	
+	// if (!is_inside_map(ptr->map, new_x, new_x))
+	// {
+	// 	printf("distance: x=%d y=%d\n", new_x, new_y);
+	// 	return;
+	// }
+	
+	// printf("move down\n");
+	if (ptr->map[new_y][new_x] == '1')  {
+		// print_map(ptr);
+		return ;
 	}
+	ptr->index++;
+	ft_putnbr(ptr->index);
+	write (1, "\n", 1);
+	
+	handle_collectible(ptr, new_x, new_y);
+	handle_exit(ptr, new_x, new_y);
+	redraw_under_player(ptr, new_x, new_y);
+	redraw_old_position(ptr);
+	
+	ptr->player[1] = new_y;
 }
 
 static void	move_down(t_ptr *ptr)
 {
-	printf("move down\n");
-	if (ptr->map[ptr->player[0] - 1][ptr->player[1]] == '1')  {
-		print_map(ptr);
-		return ;
-	}
-	ptr->index++;
-	ft_putnbr(ptr->index);
-	write (1, "\n", 1);
-	
-	handle_collectible(ptr, ptr->player[0], ptr->player[1] - 1);
-	handle_exit(ptr, ptr->player[0], ptr->player[1] - 1);
-	redraw_under_player(ptr, ptr->player[0], ptr->player[1] - 1);
-	redraw_old_position(ptr);
-	
-	ptr->player[1]--;
-}
+	int	new_x;
+	int new_y;
 
-static void	move_up(t_ptr *ptr)
-{
-	printf("move up\n");
-	if (ptr->map[ptr->player[0] + 1][ptr->player[1]] == '1')  {
-		printf("move up exit\n");
-		print_map(ptr);
+	new_x = ptr->player[0];
+	new_y = ptr->player[1] + 1;	
+
+	// if (!is_inside_map(ptr->map, new_x, new_x))
+	// {
+	// 	printf("distance: x=%d y=%d\n", new_x, new_x);
+	// 	return;
+	// }
+	
+	// printf("move up\n");
+	if (ptr->map[new_y][new_x] == '1')  {
+		// printf("move up exit\n");
+		// print_map(ptr);
 		return ;
 	}
 	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
 	
-	handle_collectible(ptr, ptr->player[0], ptr->player[1] + 1);
-	handle_exit(ptr, ptr->player[0], ptr->player[1] + 1);
-	redraw_under_player(ptr, ptr->player[0], ptr->player[1] + 1);
+	handle_collectible(ptr, new_x, new_y);
+	handle_exit(ptr, new_x, new_y);
+	redraw_under_player(ptr, new_x, new_y);
 	redraw_old_position(ptr);
 	
-	ptr->player[1]++;
+	ptr->player[1] = new_y;
 }
 
 static void	move_left(t_ptr *ptr)
 {
-	printf("movr left\n");
-	if (ptr->map[ptr->player[0] - 1][ptr->player[1]] == '1')  {
-		print_map(ptr);
-		printf("movr left exit\n");
+	int	new_x;
+	int new_y;
+
+	new_x = ptr->player[0] - 1;
+	new_y = ptr->player[1];
+	
+	// if (!is_inside_map(ptr->map, new_x, new_x))
+	// {
+	// 	printf("distance: x=%d y=%d\n", new_x, new_y);
+	// 	return;
+	// }
+	// printf("movr left\n");
+	if (ptr->map[new_y][new_x] == '1')  {
+		// print_map(ptr);
+		// printf("movr left exit\n");
 		return ;
 	}
 	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
 	
-	handle_collectible(ptr, ptr->player[0] - 1, ptr->player[1]);
-	handle_exit(ptr, ptr->player[0] - 1, ptr->player[1]);
-	redraw_under_player(ptr, ptr->player[0] - 1, ptr->player[1]);
+	handle_collectible(ptr, new_x, new_y);
+	handle_exit(ptr, new_x, new_y);
+	redraw_under_player(ptr, new_x, new_y);
 	redraw_old_position(ptr);
 
-	ptr->player[0]--;
+	ptr->player[0] = new_x;
 }
 
 static void	move_right(t_ptr *ptr)
 {
-	printf("move right\n");
-	if (ptr->map[ptr->player[0] + 1][ptr->player[1]])  {
-		print_map(ptr);
+	int new_x;
+	int new_y;
+
+	new_x = ptr->player[0] + 1;
+	new_y = ptr->player[1];
+	
+	// if (!is_inside_map(ptr->map, new_x, new_y))
+	// {
+	// 	printf("distance: x=%d y=%d\n", new_x, new_y);
+	// 	return;
+	// }
+	//printf("move right\n");
+	if (ptr->map[new_y][new_x] == '1')
+	{
+		//print_map(ptr);
 		return ;
 	}
 	ptr->index++;
 	ft_putnbr(ptr->index);
 	write (1, "\n", 1);
 	
-	handle_collectible(ptr, ptr->player[0] + 1, ptr->player[1]);
-	handle_exit(ptr, ptr->player[0] + 1, ptr->player[1]);
-	redraw_under_player(ptr, ptr->player[0] + 1, ptr->player[1]);
+	handle_collectible(ptr, new_x, new_y);
+	handle_exit(ptr, new_x, new_y);
+	redraw_under_player(ptr, new_x, new_y);
 	redraw_old_position(ptr);
 
-	ptr->player[0]++;
+	ptr->player[0] = new_x;
 }
 
 
@@ -175,5 +252,4 @@ void	choice_key(int keycode, t_ptr *ptr)
 		move_down(ptr);
 	else if (keycode == KEY_D || keycode == ARROW_RIGHT)
 		move_right(ptr);
-	printf("debug keycode %d\n", keycode);
 }

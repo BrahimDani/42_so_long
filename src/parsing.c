@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 22:18:03 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/12 15:02:28 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/14 01:17:54 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	mark_tile(char **map, int x, int y,int *items)
 		map[y][x] = 'o';
 	else if (map[y][x] == 'C')
 	{
-		map[y][x] = 'c';
 		(*items)--;
+		map[y][x] = 'c';
 	}
 	else if (map[y][x] == 'E')
 		map[y][x] = 'e';
@@ -175,6 +175,6 @@ char	**creat_map(char **argv, size_t *size)
 	if (item == 0 || find_point(map, 'P', point) == 0)
 		ft_error("this isn't a possible map\n", 1, map);
 	if (flood_fill_check_path(map, point[0], point[1], &item) == 0 || item != 0)
-		ft_error("this is a impossible map", 1, map);
+		ft_error("this isn't a possible map\n", 1, map);
 	return (map);
 }

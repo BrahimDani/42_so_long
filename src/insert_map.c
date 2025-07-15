@@ -6,7 +6,7 @@
 /*   By: brdany <brdany@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 21:08:04 by brdany            #+#    #+#             */
-/*   Updated: 2025/07/12 17:18:14 by brdany           ###   ########.fr       */
+/*   Updated: 2025/07/15 22:51:05 by brdany           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	insert_map(t_ptr *ptr)
 		while (ptr->map[y][x])
 		{
 			mlx_put_image_to_window(ptr->mlx, ptr->mlx_win,
-				choose_img(ptr->map[y][x], ptr), x * 32, y * 32);
+				choose_img(ptr->map[y][x], ptr), x * 48, y * 48);
 			x++;
 		}
 		y++;

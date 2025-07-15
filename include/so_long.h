@@ -52,6 +52,14 @@ int				exit_mlx(t_ptr *ptr, int choice);
 void			free_map(char **map);
 void			choice_key(int keycode, t_ptr *ptr);
 
+// TEST 
+void	handle_collectible(t_ptr *ptr, int x, int y);
+void	handle_exit(t_ptr *ptr, int x, int y);
+void	redraw_under_player(t_ptr *ptr, int x, int y);
+void	redraw_old_position(t_ptr *ptr);
+int	flood_fill_check_path(char **map, int x, int y, int *item);
+void	mark_tile(char **map, int x, int y,int *items);
+int	is_valid_tile(char tile);
 
 //GET NEXT LINE
 char	*ft_join_free(char *stash, char *buffer);

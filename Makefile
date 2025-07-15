@@ -6,7 +6,7 @@
 #    By: brdany <brdany@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/31 18:10:28 by tbraud            #+#    #+#              #
-#    Updated: 2025/07/12 17:11:18 by brdany           ###   ########.fr        #
+#    Updated: 2025/07/15 22:42:44 by brdany           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,19 +16,21 @@ SRC_DIR	:= src
 OBJ_DIR	:= obj
 
 CC		:= cc
-CFLAGS	:= -g -Wextra -Wall -Werror
+CFLAGS	:= -Wextra -Wall -Werror
 
 INCLUDE	:= -I ./include
 
-SRC		:= main.c \
-			get_next_line_utils.c \
-			get_next_line.c \
-			insert_map.c \
-			keyboard_key.c \
-			keyboard_key_utils.c \
-			parsing.c \
-			parsing_two.c \
-			error.c
+SRC		:= main.c 					\
+			get_next_line_utils.c 	\
+			get_next_line.c 		\
+			insert_map.c 			\
+			keyboard_key.c 			\
+			keyboard_key_utils.c 	\
+			parsing.c 				\
+			parsing_two.c 			\
+			error.c					\
+			event.c					\
+			check_path.c
 OBJ		:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 GREEN	:= \033[1;32m

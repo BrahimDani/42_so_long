@@ -62,16 +62,10 @@ void	mark_tile(char **map, int x, int y,int *items);
 int	is_valid_tile(char tile);
 
 //GET NEXT LINE
-char	*ft_join_free(char *stash, char *buffer);
-char	*read_fd(int fd, char *stash);
-char	*extract_line(char *stash);
-char	*clean_line(char *stash);
+char	*ft_strdup(char *s);
+void	ft_bzero(char *s, size_t n);
+int	ft_strchr(char *s, int c);
+char	*ft_strjoin(char *s1, char *s2);
 char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	*ft_calloc(size_t num, size_t size);
-size_t	ft_conststrlen(const char *str);
-char	*ft_strchr(const char *s, int c);
-void	ft_bzero(void *s, size_t n);
-
 
 #endif

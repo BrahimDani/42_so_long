@@ -3,114 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brdani <brdani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 04:45:02 by brdani            #+#    #+#             */
-/*   Updated: 2024/11/25 17:43:45 by brdani           ###   ########.fr       */
+/*   Created: 2023/11/26 19:48:19 by tbraud            #+#    #+#             */
+/*   Updated: 2025/05/19 17:34:53 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*ft_join_free(char *stash, char *buffer)
+static void	ft_sort_save_tab(char *tab, char save_tab[])
 {
-	char	*tmp;
+	int	i;
+	int	j;
 
-	tmp = ft_strjoin(stash, buffer);
-	free(stash);
-	return (tmp);
-}
-
-char	*read_fd(int fd, char *stash)
-{
-	char	*buffer;
-	int		bt;
-
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (buffer == NULL)
-		return (NULL);
-	bt = 1;
-	while (bt > 0)
+	if (!tab)
+		return ;
+	i = 0;
+	while (tab[i] && tab[i] != '\n')
+		i++;
+	if (tab[i])
+		i++;
+	j = i;
+	while (tab[i])
 	{
-		bt = read(fd, buffer, BUFFER_SIZE);
-		if (bt == -1)
-		{
-			free (stash);
-			free (buffer);
-			stash = NULL;
-			buffer = NULL;
-			return (stash);
-		}
-		buffer[bt] = '\0';
-		stash = ft_join_free(stash, buffer);
-		if (ft_strchr(stash, '\n'))
-			break ;
+		save_tab[i - j] = tab[i];
+		tab[i] = '\0';
+		i++;
 	}
-	free (buffer);
-	return (stash);
+	save_tab[i - j] = '\0';
 }
 
-char	*extract_line(char *stash)
+static int	ft_line(int fd, char **tab, char save_tab[])
 {
 	int		i;
-	char	*str;
 
-	i = 0;
-	if (!stash[i])
-		return (NULL);
-	while (stash[i] && stash[i] != '\n')
-		i++;
-	str = ft_calloc(i + 2, sizeof(char));
-	i = 0;
-	while (stash[i] && stash[i] != '\n')
-	{
-		str[i] = stash[i];
-		i++;
-	}
-	if (stash[i] && stash[i] == '\n')
-	{
-		str[i] = '\n';
-		i++;
-	}
-	return (str);
-}
-
-char	*clean_line(char *stash)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	j = 0;
-	while (stash[i] && stash[i] != '\n')
-		i++;
-	if (!stash[i] || (stash[i] == '\n' && !stash[i + 1]))
-	{
-		free (stash);
-		return (NULL);
-	}
-	str = ft_calloc(ft_strlen(stash) - i + 1, sizeof(char));
-	while (stash[++i])
-		str[j++] = stash[i];
-	str[j] = '\0';
-	free (stash);
-	return (str);
+	i = read (fd, save_tab, BUFFER_SIZE);
+	if (i == -1 || i == 0)
+		return (i);
+	save_tab[i] = '\0';
+	if (!*tab)
+		*tab = ft_strdup(save_tab);
+	else
+		*tab = ft_strjoin(*tab, save_tab);
+	return (i);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
-	char		*line;
+	static char	save_tab[BUFFER_SIZE + 1];
+	char		*tab;
+	int			i;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
-		return (NULL);
-	if (!stash)
-		stash = ft_calloc(1, (sizeof(char)));
-	stash = read_fd(fd, stash);
-	if (!stash)
-		return (NULL);
-	line = extract_line(stash);
-	stash = clean_line(stash);
-	return (line);
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
+		return (0);
+	tab = 0;
+	if (save_tab[0])
+		tab = ft_strdup(save_tab);
+	ft_bzero(save_tab, BUFFER_SIZE + 1);
+	i = BUFFER_SIZE;
+	while (ft_strchr(tab, '\n') && i == BUFFER_SIZE)
+		i = ft_line(fd, &tab, save_tab);
+	if (i == -1)
+		return (0);
+	ft_bzero(save_tab, BUFFER_SIZE + 1);
+	ft_sort_save_tab(tab, save_tab);
+	return (tab);
 }
